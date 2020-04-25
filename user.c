@@ -4,8 +4,8 @@ User* user[MAX_DATA];
 int count =0;
 
 int m_is_available(){
-    int i=0;
-    for(i; i<MAX_DATA; i++){
+  
+    for(int i=0; i<MAX_DATA; i++){
         if(user[i]==NULL) return 1;
     }
     return 0;
@@ -15,8 +15,8 @@ int m_count(){
 }
 
 int m_first_available(){
-	int i=0;
-	for(i;i<MAX_DATA;i++){
+	
+	for(int i=0;i<MAX_DATA;i++){
 		if(user[i]==NULL)return i;
 	}
 	return -1;
@@ -34,8 +34,8 @@ void m_create(char* username, char* usergender, char*userjob, int userscore){
 }
 
 User* m_search_by_name(char* username){
-	int i=0;
-	for(i;i<MAX_DATA;i++){
+	
+	for(int i=0;i<MAX_DATA;i++){
 		if(user[i]!=NULL && strcmp(user[i]->name, username)==0) return user[i];
 	}
 	return NULL;
@@ -59,7 +59,7 @@ char* m_user_getrank(User* u){
 
 char* m_to_string(User* u){
 	static char str[80];
-	sprintf(str, "점수: %d / 이름: %s / 성별: %s / 직업: %s /n",u->score,u->name,u->sex,u->job);
+	sprintf(str, "점수: %d / 이름: %s / 성별: %s / 직업: %s ",u->score,u->name,u->sex,u->job);
 	return str;
 }
 
@@ -95,7 +95,7 @@ void m_update(User* u, char* gender, char* job, int score){
 
 }
 char* m_to_string_save(User* u){
-	static char str[80];
+	static char str[200];
 	sprintf(str,"%s %s %s %d %s %s",u->name, u->sex, u->job, u->score, u->rank, u->group);
 	return str;
 }

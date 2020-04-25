@@ -4,8 +4,8 @@ group* clan[MAX_DATA];
 int gcount =0;
 
 int g_is_available(){
-	int i;
-	for(i=0;i<MAX_DATA;i++)
+	
+	for(int i=0;i<MAX_DATA;i++)
 	{
 		if(clan[i]==NULL)return 1;
 	}
@@ -13,8 +13,8 @@ int g_is_available(){
 }
 
 int g_first_available(){
-	int i=0;
-	for(i;i<MAX_DATA;i++){
+	
+	for(int i=0;i<MAX_DATA;i++){
 		if(clan[i]==NULL)return 1;
 	}
 	return -1;
@@ -30,8 +30,8 @@ void g_create(char* groupname, int limit_number){
 }
 
 group* g_search_by_name(char* groupname){
-	int i=0;
-	for(i;i<MAX_DATA;i++){
+	
+	for(int i=0;i<MAX_DATA;i++){
 		if(clan[i]!=NULL && strcmp(clan[i]->name, groupname)==0)return clan[i];
 	}
 	return NULL;

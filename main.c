@@ -1,7 +1,8 @@
 #include "user.h"
 #include "group.h"
 #include <string.h>
-//#define DEBUG
+#define DEBUG
+void load_user();
 void create_user();
 void read_user();
 void delete_user();
@@ -15,12 +16,16 @@ void list_user();
 void save_user();
 
 int main(){
+	
 	int menu;
 	while(1){
-		printf("\nChoose Menu: 1.create user 2. read user 3. delete user 4. update user 5. rank user 6.ranking\n");
-		printf("7. make group 8. join group 9. save group score 10. show all users 11.save all users 0.Quit >> ");
+		printf("\nChoose Menu: 0.load user datas 1.create user 2. read user 3. delete user 4. update user 5. rank user 6.ranking\n");
+		printf("7. make group 8. join group 9. save group score 10. show all users 11.save all users 12.Quit >> ");
 		scanf("%d",&menu);
 		switch(menu){
+			case 0:
+				load_user();
+				break;
 			case 1:
 				create_user();
 				break;
@@ -53,22 +58,44 @@ int main(){
 				break;
 			case 11:
 				save_user();
-			case 0:
+			case 12:
 			default:
 				return 0;
 		}
 	}
 	return 0;
 }
+void load_user(){
+
+	FILE* f = fopen("user.txt","r");
+	
+
+	char name[20], gender[20], job[20], grade[20], group[20];
+
+	int score;
+	while(!feof(f)){
+		if(!m_is_available()){
+			printf("[Load] There is no space\n");
+			break;
+		}
+		fscanf(f,"%s %s %s %d %s %s", name,gender,job,&score,grade,group);
+		m_create(name,gender,job,score);
+		User* u = m_search_by_name(name);
+		m_rankmaker(u,grade);
+		m_groupwriter(u,group);
+	}
+}
 
 void create_user(){
 	
+		
 	if(!m_is_available()){
 		printf("there is no space!");
 		return;
 	}	
 	char name[20], gender[20], job[20];
 	int score;
+
 	printf("Enter a new member's info.\n");
 	printf("name > ");
 	scanf("%s",name);
@@ -189,9 +216,23 @@ void rank_user(){
 
 }
 void ranking(){
-	
-	for(int i=0;i<m_count();i++){
-		
+	int count = m_count();
+	User* user[MAX_DATA];
+	m_get_all(user);
+	User* temp;
+	for(int i =0;i<count;i++){
+		for(int j=i;j<count;j++){
+			if(user[i]->score < user[j]->score)
+			{
+				temp = user[i];
+				user[i]=user[j];
+				user[j]=temp;
+			}
+		}
+	}
+	for(int i=0;i<count;i++){
+		User* u = user[i];
+		printf("%d. %s",i+1,m_to_string(u));	
 	}
 }
 void make_group(){
@@ -249,7 +290,7 @@ void list_user(){
 	m_get_all(player);
 	for(int i=0;i<size;i++){
 		User* u = player[i];
-	 	printf("%d. %s\n",i+1,m_to_string(u));
+	 	printf("%d. %s \n",i+1,m_to_string(u));
 	}
 }
 void save_user(){
@@ -266,7 +307,7 @@ void save_user(){
 	fclose(f);
 	
 #ifdef DEBUG
-	printf("5.all user records saved!");
+	printf("5.all user records saved!\n");
 #endif
 }
 void save_group(){
@@ -287,3 +328,4 @@ void save_group(){
 	printf("8.all group records saved!");
 #endif
 }
+

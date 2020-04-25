@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_DATA 5
+#define MAX_DATA 100
 
 typedef struct member{
 	char name[20];
