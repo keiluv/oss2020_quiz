@@ -27,6 +27,9 @@ void g_create(char* groupname, int limit_number){
 	strcpy(g->name,groupname);
 	g->group_limit_number = limit_number;
 	gcount++;
+#ifdef DEBUG
+	printf("[%s] 그룹이 생성되었습니다.\n",groupname);
+#endif
 }
 
 group* g_search_by_name(char* groupname){
